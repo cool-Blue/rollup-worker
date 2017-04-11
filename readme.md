@@ -1,9 +1,9 @@
 # Natural workflow to web workify _and_ share code, with rollup
-rollup-plugin-bundle-worker does a great job of shimming web workers into a rollup bundle, this example shows how to extend it to allow `importScripts` statements inside the web worker and to share code between the main bundle and the web worker.
+[rollup-plugin-bundle-worker](https://github.com/andyearnshaw/rollup-plugin-bundle-worker) does a great job of shimming web workers into a rollup bundle, this example shows how to extend it to allow `importScripts` statements inside the web worker and to share code between the main bundle and the web worker.
 
 ## Motivation
-The serialise/de-serialise processes for transferring objects to and from web workers is the same in both domains, so this is a natural use case but generally speaking, the UMD bundle for shared code can be consumed in both domains.
-The main problem in doing this is that rollup-plugin-bundle-worker materialises the worker as a blob URL and when `importScripts` is called from such a domain, it will resolve the file URLs accordingly and the loads will fail.  This example is one solution to that problem.
+The serialise/de-serialise processes for transferring objects to and from web workers is the same in both domains, so this is a natural use case but generally speaking, the UMD bundle for shared code can be efficiently consumed by both domains, without redundant loads.
+The main problem in doing this is that rollup-plugin-bundle-worker materialises the worker as a blob URL and when `importScripts` is called from such a domain, it will resolve the file URLs with a `blob:` and the loads will fail as explained [here](http://stackoverflow.com/a/22582695/2670182).  This example is one solution to that problem.
 
 ## Basic architecture
 The code is divided into two UMD bundles: the main bundle, which contains the purely web worker code as well as the main app; and the shared bundle, which contains common code.  It's exactly the same bundle for both so is cached and loaded only once.

@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-main": "rollup -c",
+    "build-shared": "cd src/common && rollup -c && cd ../../",
     "build": "cd src/common && rollup -c && cd ../../ && rollup -c"
   },
   "repository": {
